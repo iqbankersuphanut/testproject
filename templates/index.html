@@ -68,18 +68,13 @@
                   <input type="text" name="alertschedule" class="form-control" id="alert-schedule" placeholder="" required >
                 </fieldset>
 
-                <!--fieldset class="form-group">
-                  <label for="alert-user">Alert Users</label>
-                  <input type="text" name="alertuser" class="form-control" id="alert-user" placeholder="user" required>
-                </fieldset-->
-
                 <fieldset class="form-group">
                   <label for="alert-user">Alert User</label>
                   <select name="alertusers" id="alert-user" data-placeholder="Type part of name" multiple class="chosen-select" tabindex="8">
                   <option value=""></option>
-                  <option value="mmacmillan@thirdpoint.com">mmacmillan@thirdpoint.com (Mike MacMillan)</option>
-                  <option value="aramchandani@thirdpoint.com">aramchandani@thirdpoint.com (Ramchandani aramchandani)</option>
-                  <option value="rcooper@thirdpoint.com">rcooper@thirdpoint.com (Rachel Cooper)</option>
+                  {% for user in users.users %}
+                    <option value="{{ user.email|e }}" {% if user.email in user_list  %} selected {% endif %}>{{ user.email|e }} ({{ user.first_name|e }} {{ user.last_name|e }})</option>
+                  {% endfor %}
                 </select>
 
                 <br><br>
@@ -99,7 +94,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
     <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
-
     <!-- multiple select user and ouput -->
     <script>
       $(function() {
