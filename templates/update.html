@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="test thirpoint project">
+    <meta name="author" content="suphanut thanyaboon">
+    <link rel="icon" href="/favicon.ico">
+
+    <title></title>
+
+    <!--link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script-->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="http://v4-alpha.getbootstrap.com/examples/starter-template/starter-template.css">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="#">Third Point test Project</a>
+      <ul class="nav nav-pills">
+        <li class="nav-item active">
+          <a class="nav-link" href="http://localhost:5000/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listalert">List Alert</a>
+        </li>
+      </ul>
+    </nav>
+
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Edit Alert</h1>
+      </div>
+
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-8">
+
+            <form class="form-horizontal" action="/editalertp" method="post">
+                <fieldset class="form-group">
+                  <label for="alert-name">Alert Name</label>
+                  <input type="text" name="alertname" class="form-control" id="alert-name" value="{{alert['alert_name']}}" placeholder="">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="alert-script">Alert Script</label>
+                  <textarea class="form-control"  name="alertscript" id="alert-script" rows="8">{{alert['rule_text']}}</textarea>
+                </fieldset>
+
+                <fieldset class="form-group">
+                  <label for="alert-output">Alert Output</label>
+                  {% set format_list = alert['output_format'].split(',') %}
+                  <select name="alertoutput" id="alert-output" data-placeholder="Your Favorite Types of Bear" multiple class="chosen-select" tabindex="8">
+                  <option value=""></option>
+                  <option value="email"{% if "email" in format_list %} selected {% endif %}>Email</option>
+                  <option value="sms" {% if "sms" in format_list %} selected {% endif %}>SMS</option>
+                  </select>
+                </fieldset>
+
+                <!--fieldset class="form-group">
+                  <label for="alert-output">Alert Output</label>
+                  <input type="text" name="alertoutput" class="form-control" id="alert-output" value="{{alert['output_format']}}" placeholder="">
+                </fieldset-->
+                <fieldset class="form-group">
+                  <label for="alert-schedule">Alert Schedule</label>
+                  <input type="text" name="alertschedule" class="form-control" id="alert-schedule" value="{{alert['schedule']}}" placeholder="">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="alert-user">Alert User</label>
+                  {% set user_list = alert['output_recipients'].split(',') %}
+                  <select name="alertusers" id="alert-user" data-placeholder="Type part of name" multiple class="chosen-select" tabindex="8">
+                  <option value=""></option>
+                  {% for user in users.users %}
+                    <option value="{{ user.email|e }}" {% if user.email in user_list  %} selected {% endif %}>{{ user.email|e }} ({{ user.first_name|e }} {{ user.last_name|e }})</option>
+                  {% endfor %}
+                </select>
+                <!--fieldset class="form-group">
+                  <label for="users">Alert Users</label>
+                  <input type="text" name="alertuser" class="form-control" id="users" value="{{alert['output_recipients']}}" placeholder="user1,user2,user3">
+                </fieldset-->
+                <input type="hidden" name="id" value="{{alert['id']}}">
+                <br><br>
+                <input type="submit" name="" value="update">
+
+            </form>
+          </div>
+          <div class="col-md-2">
+          </div>
+        </div>
+
+
+    </div><!-- /.container -->
+
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+    <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+    <!-- multiple select user and ouput -->
+    <script>
+      $(function() {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: false });
+      });
+    </script>
+    <script src="http://1000hz.github.io/bootstrap-validator/dist/validator.min.js"></script>
+  </body>
+</html>

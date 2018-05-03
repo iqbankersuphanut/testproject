@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="test thirpoint project">
+    <meta name="author" content="suphanut thanyaboon">
+    <link rel="icon" href="/favicon.ico">
+
+    <title></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- My CSS -->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="http://localhost:5000/">Third Point test Project</a>
+      <ul class="nav nav-pills">
+        <li class="nav-item active">
+          <a class="nav-link" href="http://localhost:5000/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listalert">List Alert</a>
+        </li>
+      </ul>
+    </nav>
+
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Create  New Alert</h1>
+      </div>
+
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-8">
+
+            <form class="form-horizontal" id="add-alert-form" action="http://localhost:5000/createalert" method="post" data-toggle="validator">
+                <fieldset class="form-group">
+                  <label for="formGroupExampleInput">Alert Name</label>
+                  <input type="text" name="alertname" class="form-control" id="formGroupExampleInput" placeholder="" required>
+                </fieldset>
+
+                <fieldset class="form-group">
+                  <label for="alertscript">Alert Script</label>
+                  <textarea class="form-control"  name="alertscript" id="alertscript" rows="8" cols="40" placeholder="def funcName(df):" data-pattern="def .*(df):*"></textarea>
+                  <div class="help-block with-errors"></div>
+                </fieldset>
+
+                <fieldset class="form-group">
+                  <label for="alert-output">Alert Output</label>
+                  <select name="alertoutput" id="alert-output" data-placeholder="Your Favorite Types of Bear" multiple class="chosen-select" tabindex="8">
+                  <option value=""></option>
+                  <option value="email">Email</option>
+                  <option value="sms" selected>SMS</option>
+                </select>
+
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="alert-schedule">Alert Schedule</label>
+                  <input type="text" name="alertschedule" class="form-control" id="alert-schedule" placeholder="" required >
+                </fieldset>
+
+                <!--fieldset class="form-group">
+                  <label for="alert-user">Alert Users</label>
+                  <input type="text" name="alertuser" class="form-control" id="alert-user" placeholder="user" required>
+                </fieldset-->
+
+                <fieldset class="form-group">
+                  <label for="alert-user">Alert User</label>
+                  <select name="alertusers" id="alert-user" data-placeholder="Type part of name" multiple class="chosen-select" tabindex="8">
+                  <option value=""></option>
+                  <option value="mmacmillan@thirdpoint.com">mmacmillan@thirdpoint.com (Mike MacMillan)</option>
+                  <option value="aramchandani@thirdpoint.com">aramchandani@thirdpoint.com (Ramchandani aramchandani)</option>
+                  <option value="rcooper@thirdpoint.com">rcooper@thirdpoint.com (Rachel Cooper)</option>
+                </select>
+
+                <br><br>
+                  <input type="submit" name="subit" value="submit">
+                <!--button type="button" id="test" name="button">click</button-->
+
+            </form>
+          </div>
+          <div class="col-md-2">
+          </div>
+        </div>
+
+
+    </div><!-- /.container -->
+
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+    <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+
+    <!-- multiple select user and ouput -->
+    <script>
+      $(function() {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: false });
+      });
+    </script>
+    <script src="http://1000hz.github.io/bootstrap-validator/dist/validator.min.js"></script>
+
+    <!-- alert script validator -->
+    <script type="text/javascript">
+      $('form[data-toggle="validator"]').validator({
+        custom: {
+          pattern: function ($el) {
+            var pattern = new RegExp($el.data('pattern'))
+            if (!pattern.test($el.val())) {
+              return "Did not match the correct pattern\r\n \"def funcName(df):\""
+            }
+          }
+        }
+        })
+    </script>
+
+    <!-- retrive data for user recipients multiple select input -->
+    <script type="text/javascript">
+
+
+      /*$(document).ready(function(){ */
+      $('#test').click(function(){
+        $("#alert-user").append('<option value="aaaa">aaaaa</option>');
+        $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8000/users',
+        dataType: 'json',
+        success: function(data) {
+          users = data.users
+          for (var i = 0, len = users.length; i < len; i++) {
+            console.log(users[i]['email']);
+            $("#alert-user").append('<option value="aaaa">aaaaa</option>');
+          }
+          $('.chosen-select').chosen();
+        }
+      });
+
+      });
+
+
+
+    </script>
+
+
+
+
+  </body>
+</html>

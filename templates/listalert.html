@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="test thirpoint project">
+    <meta name="author" content="suphanut thanyaboon">
+    <link rel="icon" href="/favicon.ico">
+
+    <title></title>
+
+    <!--link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script-->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="http://v4-alpha.getbootstrap.com/examples/starter-template/starter-template.css">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="http://localhost:5000/">Third Point test Project</a>
+      <ul class="nav nav-pills">
+        <li class="nav-item active">
+          <a class="nav-link" href="http://localhost:5000/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listalert">List Alert</a>
+        </li>
+      </ul>
+    </nav>
+
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>List all alerts</h1>
+      </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>id #</th>
+                    <th>Alert Name</th>
+                    <th>Alert Table</th>
+                    <th>Alert Output</th>
+                    <th>Alert Schedule</th>
+                    <th>Alert Users</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for alert in alerts %}
+                  <tr>
+                    <th scope="row">{{alert['id']}}</th>
+                    <td>{{alert['alert_name']}}</td>
+                    <td><div style="word-wrap: break-word;">{{alert['rule_text']}}</div></td>
+                    <td>{{alert['output_format']}}</td>
+                    <td>{{alert['schedule']}}</td>
+                    <td>{{alert['output_recipients']}}</td>
+                    <td><a href="/editalert/{{alert['id']}}">edit</a> <!--a href="/delalert/{{alert['id']}}">del</a--></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+          </div>
+        </div>
+
+
+    </div><!-- /.container -->
+
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+  </body>
+</html>
