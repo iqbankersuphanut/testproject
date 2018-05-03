@@ -34,11 +34,9 @@ def editalertprocess():
               'output_format': ','.join(request.form.getlist('alertoutput')),
               'output_recipients': ','.join(request.form.getlist('alertusers')),
               'schedule': request.form['alertschedule'],
-              'output_recipients': request.form['alertuser'],
               'rule_text': request.form['alertscript'],
           }
 
-    return jsonify(data)
     url = "http://localhost:8000/alert/"+request.form['id']
 
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
