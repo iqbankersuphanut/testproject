@@ -19,7 +19,6 @@ def editalert(alertid):
     json_object = r.json()
     users = json_object
 
-    #get alert content
     r = requests.get('http://localhost:8000/alert/'+alertid)
     json_object = r.json()
     #return r.text
@@ -34,6 +33,7 @@ def editalertprocess():
               'output_format': ','.join(request.form.getlist('alertoutput')),
               'output_recipients': ','.join(request.form.getlist('alertusers')),
               'schedule': request.form['alertschedule'],
+              'output_recipients': request.form['alertuser'],
               'rule_text': request.form['alertscript'],
           }
 
@@ -47,7 +47,8 @@ def editalertprocess():
 #add new alert to system
 @app.route('/createalert', methods=['POST'])
 def addalert():
-    #aeirt API addalert need JSON so we need to prepare data in json format
+
+    #alirt API addalert need JSON so we need to prepare data in json format
     data = {
               'alert_name': request.form['alertname'],
               'alert_table': 'eventdrivensignal-mysql-estdiversion',
@@ -76,12 +77,7 @@ def delalert():
 #default page it is add new alert form
 @app.route('/')
 def index():
-    #get all users
-    r = requests.get('http://localhost:8000/users')
-    json_object = r.json()
-    users = json_object
-
-    return render_template('index.html', users=users)
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
